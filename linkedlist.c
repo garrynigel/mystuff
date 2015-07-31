@@ -17,48 +17,14 @@ struct nodes
   int val;
   struct nodes *next;
 };
-
 /*****************************************************
 
-   Declare global pointers for head and current node
+      Function Declarations
 
 *****************************************************/
 
-struct nodes *head = NULL;
-struct nodes *curr = NULL;
+void insopt(struct nodes *, struct nodes *);
 
-/*****************************************************
-
-        Insert Function
-
-*****************************************************/
-
-int insopt(struct nodes *, struct nodes * )
-{
-
-  int option;
-
-  printf("Enter the insert options from the menu below\n");
-  printf("1: Insert head node\n");
-  printf("2: Insert node after\n");
-  printf("3: Insert node before\n");
-  scanf("%d\n",&option );
-
-  switch (option) {
-    case 1:
-    if (!head)
-    {
-      head->val = curr->val;
-      head->next = NULL;
-    }
-    else
-    {
-      head->next = head;
-      head->val  = curr->val;
-    }
-  }
-
-}
 /*****************************************************
 
         Main Function
@@ -68,6 +34,10 @@ int insopt(struct nodes *, struct nodes * )
 int main(int argc, char const *argv[])
 {
 
+  struct nodes head;
+  struct nodes curr;
+  struct nodes *currptr;
+  currptr = &curr;
   int opt = 999;
   int insopt = 2;
   int value ;
@@ -85,19 +55,22 @@ int main(int argc, char const *argv[])
          case 1 :
          printf("Enter value of node to be inserted \n>>>> ");
          scanf("%d",&value);
-         curr->val = value;
-         insopt(*head,*curr);
+         curr.val = value;
+         insopt(&head,&curr);
+         break;
          case 2 :
          printf("Enter value of node to be deleted \n>>>> ");
+         break;
          case 3 :
          printf(" The linked list as follows \n>>>> ");
-         printf("%d",head->val);
-         curr = head->next;
-         while (!curr)
+         printf("%d",head.val);
+         currptr = head.next;
+         while (!currptr)
          {
-          printf("%d",curr->val);
-          curr = head->next;
+          printf("%d",currptr->val);
+          currptr = head.next;
          }
+         break;
          case 4 :
          printf("Exit");
          break;
@@ -106,4 +79,40 @@ int main(int argc, char const *argv[])
 
 
   return 0;
+}
+
+/*****************************************************
+
+        Insert Function
+
+*****************************************************/
+
+void insopt(struct nodes *headptr, struct nodes *currptr)
+{
+
+  int option;
+
+  printf("Enter the insert options from the menu below\n");
+  printf("1: Insert head node\n");
+  printf("2: Insert node after\n");
+  printf("3: Insert node before\n");
+  scanf("%d\n",&option );
+
+  switch (option) {
+    case 1:
+    if (!headptr)
+    {
+      headptr->val = currptr->val;
+      headptr->next = NULL;
+    }
+    else
+    {
+      headptr->next = headptr;
+      headptr->val  = currptr->val;
+      headptr = currptr;
+    }
+  }
+
+  return;
+
 }
